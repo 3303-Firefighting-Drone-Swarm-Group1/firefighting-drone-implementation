@@ -9,15 +9,19 @@ public abstract class Incident {
     public static final int LOW = 0;
     public static final int MODERATE = 1;
     public static final int HIGH = 2;
+    public static final boolean FIRE_DETECTED = true;
+    public static final boolean DRONE_REQUEST = false;
 
     private Time time;
     private int id;
     private int severity;
+    private boolean type;
     
-    public Incident(int hour, int minute, int second, int id, int severity){
+    public Incident(int hour, int minute, int second, int id, int severity, boolean type){
         time = new Time(((hour* 60 + minute)* 60 + second) * 1000);
         this.id = id;
         this.severity = severity;
+        this.type = type;
     }
 
     /**
