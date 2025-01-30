@@ -47,4 +47,12 @@ public abstract class Incident {
     public Time getTime(){
         return time;
     }
+
+    /**
+     * Gets the type of incident.
+     * @return the type
+     */
+    public boolean getType(){
+        return type;
+    }
 }
