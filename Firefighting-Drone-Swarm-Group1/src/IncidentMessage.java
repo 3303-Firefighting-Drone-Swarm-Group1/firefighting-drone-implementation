@@ -3,7 +3,7 @@
  * @author Lucas Warburton, 101276823
  */
 
- import java.sql.Time;
+import java.sql.Time;
 import java.awt.Point;
 
 public class IncidentMessage {

@@ -1,3 +1,10 @@
+/**
+ * The FireIncidentSubsystem class represents a Fire Incident Subsystem. It reads input files containing information 
+ * about the zones and events that occur, and then transmits them to the scheduler.
+ * 
+ * @author Lucas Warburton, 101276823
+ */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -13,7 +20,10 @@ public class FireIncidentSubsystem implements Runnable{
         this.eventInput = eventInput;
     }
 
-    public void start(){
+    /**
+     * Reads the input files and transmits the information to the scheduler.
+     */
+    public void run(){
         HashMap<Integer, Zone> zones = readZones();
         ArrayList<Incident> incidents = readIncidents();
         for (Incident incident: incidents){
@@ -21,6 +31,10 @@ public class FireIncidentSubsystem implements Runnable{
         }
     }
 
+    /**
+     * Reads the zone input file.
+     * @return an HashMap containing the information about each zone
+     */
     private HashMap<Integer, Zone> readZones(){
         Scanner sc = new Scanner(new File(zoneInput));
         HashMap<Integer, Zone> zones = new HashMap<>();
@@ -34,6 +48,10 @@ public class FireIncidentSubsystem implements Runnable{
         return zones;
     }
 
+    /**
+     * Reads the event input file.
+     * @return an ArrayList containing the information about each event
+     */
     private ArrayList<Incident> readIncidents(){
         Scanner sc = new Scanner(new File (eventInput));
         ArrayList<Incident> incidents = new ArrayList<>();
