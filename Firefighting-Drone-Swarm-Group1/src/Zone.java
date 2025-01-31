@@ -8,58 +8,31 @@ import java.awt.Point;
 public class Zone {
     private Point start;
     private Point end;
-    private int id;
 
-    public Zone(int id, int startx, int starty, int endx, int endy){
-        this.id = id;
+    public Zone(int startx, int starty, int endx, int endy){
         start = new Point(Math.min(startx, endx), Math.min(starty, endy));
         end = new Point(Math.max(startx, endx), Math.max(starty, endy));
     }
 
-    public Zone(int id, Point start, Point end){
-        this.id = id;
+    public Zone(Point start, Point end){
         this.start = start;
         this.end = end;
     }
     
     /**
-     * Gets the x coordinate of the start of the zone.
-     * @return the x coordinate
+     * Gets the coordinates of the start of the zone.
+     * @return the coordinates
      */
-    public int getStartX(){
-        return (int)start.getX();
+    public Point getStart(){
+        return start;
     }
 
     /**
-     * Gets the y coordinate of the start of the zone.
-     * @return the y coordinate
+     * Gets the coordinates of the end of the zone.
+     * @return the coordinate
      */
-    public int getStartY(){
-        return (int)start.getY();
-    }
-
-    /**
-     * Gets the x coordinate of the end of the zone.
-     * @return the x coordinate
-     */
-    public int getEndX(){
-        return (int)end.getX();
-    }
-
-    /**
-     * Gets the y coordinate of the end of the zone.
-     * @return the y coordinate
-     */
-    public int getEndY(){
-        return (int)end.getY();
-    }
-
-    /**
-     * Gets the id of the zone
-     * @return the id
-     */
-    public int getID(){
-        return id;
+    public Point getEnd(){
+        return end;
     }
 
     /**
@@ -71,13 +44,13 @@ public class Zone {
      */
     public Point getClosestPoint(int x, int y){
         int closestX, closestY;
-        if (x >= getStartX() && x <= getEndX()) closestX = x;
-        else if (x < getStartX()) closestX = getStartX();
-        else closestX = getEndX();
+        if (x >= start.getX() && x <= end.getX()) closestX = x;
+        else if (x < start.getX()) closestX = (int)start.getX();
+        else closestX = (int)end.getX();
 
-        if (y >= getStartY() && y <= getEndY()) closestY = y;
-        else if (y < getStartY()) closestY = getStartY();
-        else closestY = getEndY();
+        if (y >= start.getY() && y <= end.getY()) closestY = y;
+        else if (y < start.getY()) closestY = (int)start.getY();
+        else closestY = (int)end.getY();
 
         return new Point(closestX, closestY);
     }

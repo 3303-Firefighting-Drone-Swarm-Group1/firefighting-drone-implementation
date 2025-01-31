@@ -5,7 +5,7 @@
 
  import java.sql.Time;
 
-public abstract class Incident {
+public class Incident {
     public static final int LOW = 0;
     public static final int MODERATE = 1;
     public static final int HIGH = 2;
