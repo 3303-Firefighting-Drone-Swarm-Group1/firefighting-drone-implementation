@@ -38,7 +38,7 @@ public class FireIncidentSubsystem implements Runnable{
             throw new RuntimeException(e);
         }
         for (Incident incident: incidents){
-            scheduler.addNewIncident(new IncidentMessage(incident.getSeverity(), zones.get(incident.getID()).getStart(), zones.get(incident.getID()).getEnd(), incident.getTime(), incident.getType()));
+            scheduler.addNewIncident(new IncidentMessage(incident.getSeverity(), zones.get(1).getStart(), zones.get(1).getEnd(), incident.getTime(), incident.getType()));
         }
     }
 
