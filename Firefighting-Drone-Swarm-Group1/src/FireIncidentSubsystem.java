@@ -5,6 +5,7 @@
  * @author Lucas Warburton, 101276823
  */
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -24,10 +25,20 @@ public class FireIncidentSubsystem implements Runnable{
      * Reads the input files and transmits the information to the scheduler.
      */
     public void run(){
-        HashMap<Integer, Zone> zones = readZones();
-        ArrayList<Incident> incidents = readIncidents();
+        HashMap<Integer, Zone> zones = null;
+        try {
+            zones = readZones();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<Incident> incidents = null;
+        try {
+            incidents = readIncidents();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         for (Incident incident: incidents){
-            scheduler.put(new IncidentMessage(incident.getSeverity(), zones.get(incident.getID()).getStart(), zones.get(incident.getID()).getEnd(), incident.getTime(), incident.getType()));
+            scheduler.addNewIncident(new IncidentMessage(incident.getSeverity(), zones.get(incident.getID()).getStart(), zones.get(incident.getID()).getEnd(), incident.getTime(), incident.getType()));
         }
     }
 
@@ -35,7 +46,7 @@ public class FireIncidentSubsystem implements Runnable{
      * Reads the zone input file.
      * @return an HashMap containing the information about each zone
      */
-    private HashMap<Integer, Zone> readZones(){
+    private HashMap<Integer, Zone> readZones() throws FileNotFoundException {
         Scanner sc = new Scanner(new File(zoneInput));
         HashMap<Integer, Zone> zones = new HashMap<>();
         sc.nextLine();
@@ -52,7 +63,7 @@ public class FireIncidentSubsystem implements Runnable{
      * Reads the event input file.
      * @return an ArrayList containing the information about each event
      */
-    private ArrayList<Incident> readIncidents(){
+    private ArrayList<Incident> readIncidents() throws FileNotFoundException {
         Scanner sc = new Scanner(new File (eventInput));
         ArrayList<Incident> incidents = new ArrayList<>();
         sc.nextLine();
@@ -74,5 +85,5 @@ public class FireIncidentSubsystem implements Runnable{
         }
         return incidents;
     }
-    
+
 }

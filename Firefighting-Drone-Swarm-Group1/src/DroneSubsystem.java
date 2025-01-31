@@ -1,31 +1,33 @@
 public class DroneSubsystem implements Runnable {
     private final Boolean ON_JOB = false;
+    Scheduler scheduler;
+    IncidentMessage currentJobdetails;
 
-
-    String fireIncident;
-
-    public DroneSubsystem(String fireIncident) {
-        this.fireIncident = fireIncident;
+    public DroneSubsystem(Scheduler Scheduler) {
+        this.scheduler = Scheduler;
     }
 
-
-
+    /***
+     * Should only check for available work.
+     */
     @Override
     public void run() {
-        try {
-            while (!ON_JOB) {
-                //CheckScheduler for information
-                checkScheduler();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (ON_JOB) {
+            droneReport();
+        } else {
+
         }
     }
 
+    public void jobDetails() {
+        currentJobdetails = scheduler.assignIncident();
 
-    public void checkScheduler() {
-        if (!ON_JOB) {
-            //scheduler.availableWork();
-        }
+    }
+
+
+    public void droneReport() {
+       //Tell the scheduler the job is done.
+        System.out.println("Job severity: " + currentJobdetails.getSeverity());
+        System.out.println("Job Time Details: " + currentJobdetails.getTime());
     }
 }
