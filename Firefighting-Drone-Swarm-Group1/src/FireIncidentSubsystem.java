@@ -54,7 +54,12 @@ public class FireIncidentSubsystem implements Runnable{
             String[] line = sc.nextLine().trim().split(",");
             String[] start = line[1].split("();");
             String[] end = line[2].split("();");
-            zones.put(Integer.parseInt(line[0]), new Zone(Integer.parseInt(start[0]), Integer.parseInt(start[1]), Integer.parseInt(end[0]), Integer.parseInt(end[1])));
+            zones.put(
+                    Integer.parseInt(line[0]),
+                    new Zone(Integer.parseInt(start[0].substring(1)),
+                            Integer.parseInt(start[1].substring(0,1)),
+                            Integer.parseInt(end[0].substring(1)),
+                            Integer.parseInt(end[1].substring(0, (end[1].length())-1))));
         }
         return zones;
     }
