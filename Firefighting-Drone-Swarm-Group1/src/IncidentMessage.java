@@ -4,16 +4,17 @@
  */
 
 import java.sql.Time;
+
 import java.awt.Point;
 
 public class IncidentMessage {
-    private int severity;
+    private Incident.Severity severity;
     private Point start;
     private Point end;
     private Time time;
-    private boolean type;
+    private Incident.Type type;
 
-    public IncidentMessage(int severity, Point start, Point end, Time time, boolean type){
+    public IncidentMessage(Incident.Severity severity, Point start, Point end, Time time, Incident.Type type){
         this.severity = severity;
         this.start = start;
         this.end = end;
@@ -25,7 +26,7 @@ public class IncidentMessage {
      * Gets the severity of the incident
      * @return the severity
      */
-    public int getSeverity(){
+    public Incident.Severity getSeverity(){
         return severity;
     }
 
@@ -93,7 +94,7 @@ public class IncidentMessage {
      * Gets the type of the incident.
      * @return the type
      */
-    public boolean getType(){
+    public Incident.Type getType(){
         return type;
     }
 

@@ -61,6 +61,7 @@ public class FireIncidentSubsystem implements Runnable{
                             Integer.parseInt(end[0].substring(1)),
                             Integer.parseInt(end[1].substring(0, (end[1].length())-1))));
         }
+        sc.close();
         return zones;
     }
 
@@ -77,17 +78,18 @@ public class FireIncidentSubsystem implements Runnable{
 
             String[] time = line[0].split(":");
 
-            boolean type;
-            if (line[2].equals("FIRE_DETECTED")) type = Incident.FIRE_DETECTED;
-            else type = Incident.DRONE_REQUEST;
+            Incident.Type type;
+            if (line[2].equals("FIRE_DETECTED")) type = Incident.Type.FIRE_DETECTED;
+            else type = Incident.Type.DRONE_REQUEST;
 
-            int severity;
-            if (line[3].equals("High")) severity = Incident.HIGH;
-            else if (line[3].equals("Moderate")) severity = Incident.MODERATE;
-            else severity = Incident.LOW;
+            Incident.Severity severity;
+            if (line[3].equals("High")) severity = Incident.Severity.HIGH;
+            else if (line[3].equals("Moderate")) severity = Incident.Severity.MODERATE;
+            else severity = Incident.Severity.LOW;
 
             incidents.add(new Incident(Integer.parseInt(time[0]), Integer.parseInt(time[1]), Integer.parseInt(time[2]), Integer.parseInt(line[1]), severity, type));
         }
+        sc.close();
         return incidents;
     }
 

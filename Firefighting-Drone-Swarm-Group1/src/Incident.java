@@ -6,18 +6,26 @@
  import java.sql.Time;
 
 public class Incident {
-    public static final int LOW = 0;
-    public static final int MODERATE = 1;
-    public static final int HIGH = 2;
+    public enum Severity {
+        LOW,
+        MODERATE,
+        HIGH
+    }
+
+    public enum Type {
+        FIRE_DETECTED,
+        DRONE_REQUEST
+    }
+
     public static final boolean FIRE_DETECTED = true;
     public static final boolean DRONE_REQUEST = false;
 
     private Time time;
     private int id;
-    private int severity;
-    private boolean type;
+    private Severity severity;
+    private Type type;
     
-    public Incident(int hour, int minute, int second, int id, int severity, boolean type){
+    public Incident(int hour, int minute, int second, int id, Severity severity, Type type){
         time = new Time(((hour* 60 + minute)* 60 + second) * 1000);
         this.id = id;
         this.severity = severity;
@@ -36,7 +44,7 @@ public class Incident {
      * Gets the severity of the incident.
      * @return the severity
      */
-    public int getSeverity(){
+    public Severity getSeverity(){
         return severity;
     }
 
@@ -52,7 +60,7 @@ public class Incident {
      * Gets the type of incident.
      * @return the type
      */
-    public boolean getType(){
+    public Type getType(){
         return type;
     }
 }
