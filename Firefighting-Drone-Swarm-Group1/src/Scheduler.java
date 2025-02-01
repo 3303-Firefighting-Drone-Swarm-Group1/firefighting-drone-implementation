@@ -39,7 +39,7 @@ public class Scheduler {
         Point x = new Point(0,0);
         Point y = new Point(0,1);
         Time sample = new Time(10);
-        IncidentMessage newIncident = new IncidentMessage(1,x,y,sample,true);
+        IncidentMessage newIncident = new IncidentMessage(Incident.Severity.MODERATE,x,y,sample,Incident.Type.FIRE_DETECTED);
         availableWork.add(newIncident);
         System.out.println(newIncident);
         notifyIncidentCleared();
