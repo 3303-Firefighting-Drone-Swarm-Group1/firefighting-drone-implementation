@@ -40,6 +40,9 @@ public class FireIncidentSubsystem implements Runnable{
         for (Incident incident: incidents){
             scheduler.addNewIncident(new IncidentMessage(incident.getSeverity(), zones.get(1).getStart(), zones.get(1).getEnd(), incident.getTime(), incident.getType()));
         }
+        if (scheduler.getJob_Complete() == true) {
+            System.out.println("Fire Incident Recieved Job Completion Token.");
+        }
     }
 
     /**

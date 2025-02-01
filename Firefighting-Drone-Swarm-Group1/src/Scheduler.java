@@ -76,5 +76,9 @@ public class Scheduler {
     public void setJob_Complete(Boolean job_Complete) {
         Job_Complete = job_Complete;
     }
+
+    public Boolean getJob_Complete() {
+        return Job_Complete;
+    }
 }
 
