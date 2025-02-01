@@ -17,9 +17,6 @@ public class Incident {
         DRONE_REQUEST
     }
 
-    public static final boolean FIRE_DETECTED = true;
-    public static final boolean DRONE_REQUEST = false;
-
     private Time time;
     private int id;
     private Severity severity;
