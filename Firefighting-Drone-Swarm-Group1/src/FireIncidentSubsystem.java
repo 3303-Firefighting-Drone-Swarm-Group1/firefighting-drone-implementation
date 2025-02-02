@@ -14,11 +14,14 @@ import java.io.File;
 public class FireIncidentSubsystem implements Runnable{
     private Scheduler scheduler;
     private String zoneInput, eventInput;
+    private Box sendBox, recieveBox;
 
-    public FireIncidentSubsystem(Scheduler scheduler, String zoneInput, String eventInput){
+    public FireIncidentSubsystem(Scheduler scheduler, String zoneInput, String eventInput, Box sendBox, Box recieveBox){
         this.scheduler = scheduler;
         this.zoneInput = zoneInput;
         this.eventInput = eventInput;
+        this.sendBox = sendBox;
+        this.recieveBox = recieveBox;
     }
 
     /**
@@ -38,11 +41,10 @@ public class FireIncidentSubsystem implements Runnable{
             throw new RuntimeException(e);
         }
         for (Incident incident: incidents){
-            scheduler.addNewIncident(new IncidentMessage(incident.getSeverity(), zones.get(1).getStart(), zones.get(1).getEnd(), incident.getTime(), incident.getType()));
+            sendBox.put(new IncidentMessage(incident.getSeverity(), zones.get(1).getStart(), zones.get(1).getEnd(), incident.getTime(), incident.getType()));
         }
-        if (scheduler.getJob_Complete() == true) {
-            System.out.println("Fire Incident Recieved Job Completion Token.");
-        }
+        recieveBox.get(); // get acknowledgement
+        System.out.println("Fire Incident Recieved Job Completion Token.");
     }
 
     /**

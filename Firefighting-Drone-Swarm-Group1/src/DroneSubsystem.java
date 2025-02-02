@@ -27,8 +27,12 @@ public class DroneSubsystem implements Runnable {
     double distance;
     double numReturnTrips;
 
-    public DroneSubsystem(Scheduler Scheduler) {
+    Box sendBox, recieveBox;
+
+    public DroneSubsystem(Scheduler Scheduler, Box sendBox, Box recieveBox) {
         this.scheduler = Scheduler;
+        this.sendBox = sendBox;
+        this.recieveBox = recieveBox;
     }
 
     /***
@@ -76,12 +80,12 @@ public class DroneSubsystem implements Runnable {
 
     public void jobDetails() {
         System.out.println("Drone Requests Job");
-        currentJobdetails = scheduler.assignIncident();
+        currentJobdetails = (IncidentMessage) recieveBox.get();
     }
 
     public void notifyJobCompletion() {
         //Send a Packet back to the Scheduler
-        scheduler.setJob_Complete(true);
+        sendBox.put(true);
     }
 
     public void droneCalculations() {
