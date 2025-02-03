@@ -15,6 +15,7 @@ public class FireIncidentSubsystem implements Runnable{
     private Scheduler scheduler;
     private String zoneInput, eventInput;
     private Box sendBox, recieveBox;
+    private int numCompleted;
 
     public FireIncidentSubsystem(Scheduler scheduler, String zoneInput, String eventInput, Box sendBox, Box recieveBox){
         this.scheduler = scheduler;
@@ -22,6 +23,7 @@ public class FireIncidentSubsystem implements Runnable{
         this.eventInput = eventInput;
         this.sendBox = sendBox;
         this.recieveBox = recieveBox;
+        numCompleted = 0;
     }
 
     /**
@@ -45,6 +47,7 @@ public class FireIncidentSubsystem implements Runnable{
             sendBox.put(new IncidentMessage(incident.getSeverity(), zones.get(incident.getID()).getStart(), zones.get(incident.getID()).getEnd(), incident.getTime(), incident.getType()));
             recieveBox.get(); // get acknowledgement
             System.out.println("Fire Incident Recieved Job Completion Token.");
+            numCompleted++;
         }
         sendBox.put(null);
     }
@@ -98,6 +101,14 @@ public class FireIncidentSubsystem implements Runnable{
         }
         sc.close();
         return incidents;
+    }
+
+    /**
+     * Gets the number of incidents which were fully processed.
+     * @return the number of incidents
+     */
+    public int getNumCompleted(){
+        return numCompleted;
     }
 
 }
