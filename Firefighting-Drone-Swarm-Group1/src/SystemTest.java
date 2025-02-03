@@ -39,26 +39,35 @@ class SystemTest {
     @Test
     void testIncidentPassing() throws InterruptedException {
         // Create components
-        Scheduler scheduler = new Scheduler();
-        FireIncidentSubsystem fireSystem = new FireIncidentSubsystem(scheduler, ZONE_FILE, EVENT_FILE);
-        DroneSubsystem drone = new DroneSubsystem(scheduler);
+        Box fireToSchedulerBox = new Box();
+        Box schedulerToFireBox = new Box();
+        Box schedulerToDroneBox = new Box();
+        Box droneToSchedulerBox = new Box();
+
+        Scheduler scheduler = new Scheduler(schedulerToFireBox, schedulerToDroneBox, fireToSchedulerBox, droneToSchedulerBox);
+        FireIncidentSubsystem fireSystem = new FireIncidentSubsystem(scheduler, ZONE_FILE, EVENT_FILE, fireToSchedulerBox, schedulerToFireBox);
+        DroneSubsystem drone = new DroneSubsystem(scheduler, droneToSchedulerBox, schedulerToDroneBox);
 
         // Start threads
         Thread fireThread = new Thread(fireSystem);
         Thread droneThread = new Thread(drone);
+        Thread schedulerThread = new Thread(scheduler);
         fireThread.start();
         droneThread.start();
+        schedulerThread.start();
 
         // thread delay
         Thread.sleep(5000);
 
         // scheduler processed at least one incident
-        assertNotNull(scheduler.assignIncident(), "Incident was not passed to Scheduler correctly!");
+        assertTrue(fireSystem.getNumCompleted() > 0, "No incidents were fully processed.");
 
         // terminate threads
         fireThread.interrupt();
         droneThread.interrupt();
+        schedulerThread.interrupt();
         fireThread.join();
         droneThread.join();
+        schedulerThread.join();
     }
 }
