@@ -40,18 +40,15 @@ public class DroneSubsystem implements Runnable {
      */
     @Override
     public void run() {
-        //Look for Job
-        jobDetails();
-        //Complete Job
-        if (currentJobdetails != null) {
-            ON_JOB = true;
+        while(true){
+            //Look for Job
+            jobDetails();
+            //Complete Job
+            if (currentJobdetails != null) {
+                ON_JOB = true;
+            } else break;
+            extinguishFire();
         }
-        extinguishFire();
-
-        //Print out the Information from
-
-        //Send a message back.
-
     }
 
     private void extinguishFire() {
@@ -76,6 +73,7 @@ public class DroneSubsystem implements Runnable {
             numReturnTrips = ceil(requiredLiquid/SIZE_OF_TANK);
         }
         droneCalculations();
+        notifyJobCompletion();
     }
 
     public void jobDetails() {

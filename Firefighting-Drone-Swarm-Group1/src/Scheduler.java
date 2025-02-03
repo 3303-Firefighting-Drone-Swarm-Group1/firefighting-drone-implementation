@@ -25,11 +25,16 @@ public class Scheduler implements Runnable {
     @Override
     public void run() {
         while (true) {
-            IncidentMessage iMessage = (IncidentMessage) fireIncidentRecieveBox.get();
-
-            droneSendBox.put(iMessage);
-            droneRecieveBox.get();
-            fireIncidentSendBox.put(true);
+            Object iMessage = fireIncidentRecieveBox.get();
+            if (iMessage instanceof IncidentMessage){
+                droneSendBox.put((IncidentMessage)iMessage);
+                droneRecieveBox.get();
+                fireIncidentSendBox.put(true);
+            }
+            else{
+                droneSendBox.put(null);
+                break;
+            }
         }
     }
 }

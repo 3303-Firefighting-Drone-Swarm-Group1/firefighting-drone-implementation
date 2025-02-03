@@ -1,17 +1,16 @@
 /**
- * A counter that holds the two ingredients
- * given by the agent and can give to the chefs.
+ * A box that holds an object.
  * @author Marc Fernandes 101288346
  * @version 2025-01-23
  */
 public class Box {
-    // the object to hold and whether the counter is empty
+    // the object to hold and whether the box is empty
     private Object o;
     private boolean empty = true;
 
     /**
-     * Returns the object if the counter is not empty, and
-     * sets the counter to empty.
+     * Returns the object if the box is not empty, and
+     * sets the box to empty.
      * @return The object that was held
      */
     public synchronized Object get() {
@@ -26,8 +25,8 @@ public class Box {
     }
 
     /**
-     * Sets the counter to the object given.
-     * @param o The object for the counter to take
+     * Sets the box to the object given.
+     * @param o The object for the box to take
      */
     public synchronized void put(Object o) {
         while (!empty) {
@@ -41,8 +40,8 @@ public class Box {
     }
 
     /**
-     * Returns the object if the counter is not empty,
-     * however does not remove the object from the counter.
+     * Returns the object if the box is not empty,
+     * however does not remove the object from the box.
      * @return The object that was held
      */
     public synchronized Object peek() {

@@ -40,11 +40,13 @@ public class FireIncidentSubsystem implements Runnable{
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        System.out.printf("There are %d incidents loaded.\n", incidents.size());
         for (Incident incident: incidents){
-            sendBox.put(new IncidentMessage(incident.getSeverity(), zones.get(1).getStart(), zones.get(1).getEnd(), incident.getTime(), incident.getType()));
+            sendBox.put(new IncidentMessage(incident.getSeverity(), zones.get(incident.getID()).getStart(), zones.get(incident.getID()).getEnd(), incident.getTime(), incident.getType()));
+            recieveBox.get(); // get acknowledgement
+            System.out.println("Fire Incident Recieved Job Completion Token.");
         }
-        recieveBox.get(); // get acknowledgement
-        System.out.println("Fire Incident Recieved Job Completion Token.");
+        sendBox.put(null);
     }
 
     /**
